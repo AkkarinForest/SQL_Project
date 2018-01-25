@@ -1,0 +1,156 @@
+
+This file contains the sqls and other notes I made during designe fase. Some of them were changed during implementation fase.
+
+
+ITERATION 1
+
+COLLECTING
+
+
+INSERT INTO collect (ip, first, last) VALUES ("8.8.8.8",1502350717,1502350717) ON DUPLICATE KEY UPDATE last=1502350717;
+
+
+if ip not in db:
+
+INSERT INTO collect (ip, firstt, lastt) 
+VALUES ("8.8.8.8", 100, 100);
+
+INSERT INTO collect (ip, firstt, lastt) 
+VALUES ("8.8.8.9", 103, 103);
+
+else:
+
+UPDATE collect set lastt=105 where ip='8.8.8.8';
+
+update collect 
+set testt=200, responst=0.33 
+where ip='8.8.8.3'
+
+
+TESTING
+
+select ip from collect order by test asc limit 10;
+
+avg=0.3
+time=1502350717
+
+if ping ok:
+update collect set resp=avg, test=time where ip=8.8.8.8;
+
+else:
+delete from collect where ip=8.8.8.8;
+
+
+REPORT
+
+select ip from collect order by resp desc limit 3;
+
+select ip from collect order by resp asc limit 3
+
+
+
+
+
+
+
+ITERATION 2
+
+
+
+create table urls ( url varchar(40) )
+
+create table pairs (ip varchar(20), url varchar(40) )
+
+and add fogaigne keys
+
+
+COLLECTING
+
+
+
+INSERT INTO  urls (url) VALUES ("kaboompics.com") on duplicate key update url=url
+ 
+INSERT INTO collect (ip, first, last) VALUES ("23.216.52.9", 100, 100) on duplicate key update ip=ip
+
+
+INSERT INTO pairs (url, ip) VALUES ("kaboompics.com", "23.216.52.9") on duplicate key update url=url, ip=ip
+
+TESTING
+
+
+SELECT url FROM urls order by test asc limit 10
+
+run dig for i in urls
+
+    for j in list of ips from dig
+
+        INSERT INTO collect (ip, first, last) VALUES ("23.216.52.9", 100, 100) on duplicate key update ip=ip
+
+
+        INSERT INTO pairs (url, ip) VALUES ("kaboompics.com", "23.216.52.9") on duplicate key update url=url, ip=ip
+
+
+REPORT
+
+subqueries:
+
+select p.ip, p.url from pairs as p join (SELECT url FROM urls order by test asc limit 10) as u on p.url=u.url
+
+select p.ip, p.url, c.resp from pairs as p join (SELECT url FROM urls order by test asc limit 10) as u on p.url=u.url join collect as c on p.ip=c.ip
+
+select p.url, min(c.resp) from pairs as p join (SELECT url FROM urls order by test asc limit 10) as u on p.url=u.url join collect as c on p.ip=c.ip group by p.url
+
+
+
+url, minim resp time, ip:
+
+select a.url, a.mini, d.ip from pairs as d join (select p.url, min(c.resp)as mini from pairs as p join (SELECT url FROM urls order by test asc limit 10) as u on p.url=u.url join collect as c on p.ip=c.ip group by p.url) as a on a.url=d.url
+
+
+
+
+
+
+
+
+
+
+OTHER NOTES
+
+mysql -u me -B -s -e
+
+sudo tshark -T fields -e ip.addr -e frame.time_epoch  dst host 10.0.2.15 
+
+sudo tshark -T fields -e ip.addr -e frame.time_epoch -e dns.qry.name -e http.host dst host 10.0.2.15 | ./collectI2.py 
+
+sudo tshark -T fields -e frame.number -e frame.protocols -e dns.qry.name -e http.host -Y "dns.qry.name or http.host" -e ip.dst
+
+
+dig google.com - to find adresses
+
+
+crontab -e 
+
+*/3 * * * * /home/rollingstone/PycharmProjects/sql/testing.sh
+*/3 * * * * /home/rollingstone/PycharmProjects/sql/testing2.sh
+
+
+
+dig google.com +noall +answer | grep ^google.com. | awk '{print $5}'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,26 @@
+1. Create database named 'tcp' for user 'me' without a password
+
+2. Execute commands provided in commands.txt to create tables
+
+3. Execute run.sh to start colleting data
+
+4. To start automatic testing execute: 
+
+   $ crontab -e
+
+   and add following lines:
+
+*/3 * * * * /<PATH>/testing.sh
+*/3 * * * * /<PATH>/testing2.sh
+
+5. To see reports execute report.sh and report2.sh
+
+Note: if the response time is 99999 that indicates not all addresses were yet tested in iteration one. Please run testing.sh on all of them fist.
+
+
+
+
+
+
+
+

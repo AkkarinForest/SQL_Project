@@ -1,0 +1,101 @@
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `tcp`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `collect`
+--
+
+CREATE TABLE `collect` (
+  `ip` varchar(20) NOT NULL,
+  `first` varchar(20) DEFAULT NULL,
+  `last` varchar(20) DEFAULT NULL,
+  `test` double NOT NULL DEFAULT '0',
+  `resp` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pairs`
+--
+
+CREATE TABLE `pairs` (
+  `ip` varchar(20) NOT NULL,
+  `url` varchar(40) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `urls`
+--
+
+CREATE TABLE `urls` (
+  `url` varchar(40) NOT NULL,
+  `test` double NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `collect`
+--
+ALTER TABLE `collect`
+  ADD PRIMARY KEY (`ip`),
+  ADD KEY `ip` (`ip`);
+
+--
+-- Indexes for table `pairs`
+--
+ALTER TABLE `pairs`
+  ADD PRIMARY KEY (`ip`,`url`),
+  ADD KEY `ip` (`ip`),
+  ADD KEY `url` (`url`);
+
+--
+-- Indexes for table `urls`
+--
+ALTER TABLE `urls`
+  ADD PRIMARY KEY (`url`),
+  ADD KEY `url` (`url`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `pairs`
+--
+ALTER TABLE `pairs`
+  ADD CONSTRAINT `pairs_ibfk_1` FOREIGN KEY (`ip`) REFERENCES `collect` (`ip`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `pairs_ibfk_2` FOREIGN KEY (`url`) REFERENCES `urls` (`url`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
