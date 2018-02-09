@@ -1,8 +1,12 @@
+
+This project 
+
+
 1. Create database named 'tcp' for user 'me' without a password
 
 2. Execute commands provided in commands.txt to create tables
 
-3. Execute run.sh to start colleting data
+3. Execute run.sh to start collecting data
 
 4. To start automatic testing execute: 
 
